@@ -55,9 +55,11 @@
           console.error(error);
         });
     }
+    const intervalParam = new URL(window.location.href).searchParams.get("interval") || 5;
+    const interval = intervalParam * 1000;
 
-    setInterval(() => ping("https://github.githubassets.com/favicon.ico", 0), 5000);
-    setInterval(() => ping("https://s1.music.126.net/style/favicon.ico", 1), 5000);
+    setInterval(() => ping("https://github.githubassets.com/favicon.ico", 0), interval);
+    setInterval(() => ping("https://s1.music.126.net/style/favicon.ico", 1), interval);
   </script>
 </body>
 
