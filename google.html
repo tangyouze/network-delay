@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  </head>
+  <body>
+    <canvas id="latencyChart"></canvas>
+    <script>
+      const chartContainer = document.querySelector("#latencyChart");
+      const latencyData = {
+        labels: [],
+        datasets: [
+          {
+            label: "Latency (ms)",
+            data: []
+          }
+        ]
+      };
+      const latencyChart = new Chart(chartContainer, {
+        type: "line",
+        data: latencyData,
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true
+                }
+              }
+            ]
+          }
+        }
+      });
+
+      function ping() {
+        const startTime = performance.now();
+        fetch("https://google.com")
+          .then(() => {
+            const latency = performance.now() - startTime;
+            latencyData.labels.push(new Date().toLocaleTimeString());
+            latencyData.datasets[0].data.push(latency);
+            latencyChart.update();
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
+
+      setInterval(ping, 1000);
+    </script>
+  </body>
+</html>
