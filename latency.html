@@ -11,8 +11,16 @@
         labels: [],
         datasets: [
           {
-            label: "Latency (ms)",
-            data: []
+            label: "Google Latency (ms)",
+            data: [],
+            borderColor: "#3e95cd",
+            fill: false
+          },
+          {
+            label: "YouTube Latency (ms)",
+            data: [],
+            borderColor: "#8e5ea2",
+            fill: false
           }
         ]
       };
@@ -32,12 +40,9 @@
         }
       });
 
-      function ping() {
+      function pingGoogle() {
         const startTime = performance.now();
-        
-        var url = 'https://github.githubassets.com/favicon.ico??ms=' + new Date().getTime();
-
-        fetch(url)
+        fetch("https://www.google.com/favicon.ico?" + new Date().getTime())
           .then(() => {
             const latency = performance.now() - startTime;
             latencyData.labels.push(new Date().toLocaleTimeString());
@@ -49,7 +54,22 @@
           });
       }
 
-      setInterval(ping, 1000);
+      function pingYouTube() {
+        const startTime = performance.now();
+        fetch("https://www.youtube.com/favicon.ico?" + new Date().getTime())
+          .then(() => {
+            const latency = performance.now() - startTime;
+            latencyData.labels.push(new Date().toLocaleTimeString());
+            latencyData.datasets[1].data.push(latency);
+            latencyChart.update();
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
+
+      setInterval(pingGoogle, 1000);
+      setInterval(pingYouTube, 1000);
     </script>
   </body>
 </html>
