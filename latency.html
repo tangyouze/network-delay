@@ -1,61 +1,64 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-  </head>
-  <body>
-    <canvas id="latencyChart"></canvas>
-    <script>
-      const chartContainer = document.querySelector("#latencyChart");
-      const latencyData = {
-        labels: [],
-        datasets: [
-          {
-            label: "Github Latency (ms)",
-            data: [],
-            borderColor: "#3e95cd",
-            fill: false
-          },
-          {
-            label: "WangYi Music Latency (ms)",
-            data: [],
-            borderColor: "#8e5ea2",
-            fill: false
-          }
-        ]
-      };
-      const latencyChart = new Chart(chartContainer, {
-        type: "line",
-        data: latencyData,
-        options: {
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true
-                }
-              }
-            ]
-          }
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+</head>
+
+<body>
+  <canvas id="latencyChart"></canvas>
+  <script>
+    const chartContainer = document.querySelector("#latencyChart");
+    const latencyData = {
+      labels: [],
+      datasets: [{
+          label: "Github Latency (ms)",
+          data: [],
+          borderColor: "#3e95cd",
+          fill: false
+        },
+        {
+          label: "WangYi Music Latency (ms)",
+          data: [],
+          borderColor: "#8e5ea2",
+          fill: false
         }
-      });
-
-      function ping(url, datasetIndex) {
-        const startTime = performance.now();
-        fetch(url + "?" + new Date().getTime())
-          .then(() => {
-            const latency = performance.now() - startTime;
-            latencyData.labels.push(new Date().toLocaleTimeString());
-            latencyData.datasets[datasetIndex].data.push(latency);
-            latencyChart.update();
-          })
-          .catch(error => {
-            console.error(error);
-          });
+      ]
+    };
+    const latencyChart = new Chart(chartContainer, {
+      type: "line",
+      data: latencyData,
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
       }
+    });
 
-      setInterval(() => ping("https://github.githubassets.com/favicon.ico", 0), 5000);
-      setInterval(() => ping("https://s1.music.126.net/style/favicon.ico", 1), 5000);
-    </script>
-  </body>
+    function ping(url, datasetIndex) {
+      const startTime = performance.now();
+      fetch(url + "?" + new Date().getTime())
+        .then(() => {
+          const latency = performance.now() - startTime;
+          if (datasetIndex == 0) {
+            latencyData.labels.push(new Date().toLocaleTimeString());
+
+          }
+          latencyData.datasets[datasetIndex].data.push(latency);
+          latencyChart.update();
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+
+    setInterval(() => ping("https://github.githubassets.com/favicon.ico", 0), 5000);
+    setInterval(() => ping("https://s1.music.126.net/style/favicon.ico", 1), 5000);
+  </script>
+</body>
+
 </html>
