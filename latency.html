@@ -40,13 +40,13 @@
         }
       });
 
-      function pingGoogle() {
+      function ping(url, datasetIndex) {
         const startTime = performance.now();
-        fetch("https://github.githubassets.com/favicon.ico?" + new Date().getTime())
+        fetch(url + "?" + new Date().getTime())
           .then(() => {
             const latency = performance.now() - startTime;
             latencyData.labels.push(new Date().toLocaleTimeString());
-            latencyData.datasets[0].data.push(latency);
+            latencyData.datasets[datasetIndex].data.push(latency);
             latencyChart.update();
           })
           .catch(error => {
@@ -54,22 +54,8 @@
           });
       }
 
-      function pingYouTube() {
-        const startTime = performance.now();
-        fetch("https://s1.music.126.net/style/favicon.ico?" + new Date().getTime())
-          .then(() => {
-            const latency = performance.now() - startTime;
-            latencyData.labels.push(new Date().toLocaleTimeString());
-            latencyData.datasets[1].data.push(latency);
-            latencyChart.update();
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      }
-
-      setInterval(pingGoogle, 1000);
-      setInterval(pingYouTube, 1000);
+      setInterval(() => ping("https://github.githubassets.com/favicon.ico", 0), 5000);
+      setInterval(() => ping("https://s1.music.126.net/style/favicon.ico", 1), 5000);
     </script>
   </body>
 </html>
