@@ -34,7 +34,9 @@
 
       function ping() {
         const startTime = performance.now();
-        fetch("https://google.com/favicon.ico")
+        var url = 'https://google.com/favicon.ico?ms=' + new Date().getTime();
+
+        fetch(url)
           .then(() => {
             const latency = performance.now() - startTime;
             latencyData.labels.push(new Date().toLocaleTimeString());
