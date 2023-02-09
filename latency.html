@@ -11,13 +11,13 @@
         labels: [],
         datasets: [
           {
-            label: "Google Latency (ms)",
+            label: "Github Latency (ms)",
             data: [],
             borderColor: "#3e95cd",
             fill: false
           },
           {
-            label: "YouTube Latency (ms)",
+            label: "WangYi Music Latency (ms)",
             data: [],
             borderColor: "#8e5ea2",
             fill: false
@@ -42,7 +42,7 @@
 
       function pingGoogle() {
         const startTime = performance.now();
-        fetch("https://www.google.com/favicon.ico?" + new Date().getTime())
+        fetch("https://github.githubassets.com/favicon.ico?" + new Date().getTime())
           .then(() => {
             const latency = performance.now() - startTime;
             latencyData.labels.push(new Date().toLocaleTimeString());
@@ -56,7 +56,7 @@
 
       function pingYouTube() {
         const startTime = performance.now();
-        fetch("https://www.youtube.com/favicon.ico?" + new Date().getTime())
+        fetch("https://s1.music.126.net/style/favicon.ico?" + new Date().getTime())
           .then(() => {
             const latency = performance.now() - startTime;
             latencyData.labels.push(new Date().toLocaleTimeString());
