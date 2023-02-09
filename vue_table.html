@@ -1,0 +1,36 @@
+<template>
+	<div>
+	  <table>
+	    <tr>
+	      <th v-for="header in headers">{{ header }}</th>
+	    </tr>
+	    <tr v-for="row in rows">
+	      <td v-for="value in row">{{ value }}</td>
+	    </tr>
+	  </table>
+	</div>
+      </template>
+      
+      <script>
+      export default {
+	data() {
+	  return {
+	    headers: ['First Name', 'Last Name', 'Age', 'City', 'Country'],
+	    rows: []
+	  };
+	},
+	mounted() {
+	  // generate a large number of rows
+	  for (let i = 1; i <= 1000; i++) {
+	    this.rows.push([
+	      'First Name ' + i,
+	      'Last Name ' + i,
+	      i,
+	      'City ' + i,
+	      'Country ' + i
+	    ]);
+	  }
+	}
+      };
+      </script>
+      
