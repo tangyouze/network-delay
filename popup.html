@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Example</title>
+  <script>
+    function requestNotificationPermission() {
+      if ('Notification' in window) {
+       console.log('go')
+        Notification.requestPermission().then(permission => {
+        console.log('perm', permission)
+          if (permission === 'granted') {
+            setTimeout(showNotification, 3000);
+          }
+        });
+      } else {
+        console.error('This browser does not support notifications.');
+      }
+    }
+
+    function showNotification() {
+      const options = {
+        body: 'This is a notification after 10 seconds.',
+        icon: 'path/to/icon.png'
+      };
+      
+      new Notification('Notification Example', options);
+    }
+
+    document.addEventListener('DOMContentLoaded', requestNotificationPermission);
+  </script>
+</head>
+<body>
+  <h1>Notification Example</h1>
+  <p>Wait for 10 seconds to see the notification.</p>
+</body>
+</html>
